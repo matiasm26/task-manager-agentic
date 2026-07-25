@@ -4,6 +4,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
+import authRoutes from "./routes/auth.routes";
 import homeRoutes from "./routes/home.routes";
 
 const app = express();
@@ -23,6 +24,8 @@ app.set("views", viewsPath);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use("/auth", authRoutes);
 
 app.use("/", homeRoutes);
 
