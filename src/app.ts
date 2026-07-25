@@ -8,6 +8,7 @@ import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
 import { exposeCurrentUser } from "./middlewares/auth.middleware";
 import authRoutes from "./routes/auth.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
+import taskRoutes from "./routes/task.routes";
 import homeRoutes from "./routes/home.routes";
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(exposeCurrentUser);
 
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/tasks", taskRoutes);
 
 app.use("/", homeRoutes);
 

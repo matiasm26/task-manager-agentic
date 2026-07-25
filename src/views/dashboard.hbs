@@ -6,3 +6,58 @@
     <button type="submit">Cerrar sesión</button>
   </form>
 </section>
+
+<section>
+  <h2>Crear tarea</h2>
+
+  <form action="/tasks" method="POST" novalidate>
+    <div>
+      <label for="title">Título</label>
+      <input id="title" name="title" type="text" value="{{taskForm.values.title}}" required>
+      {{#if taskForm.errors.title}}
+        <p role="alert">{{taskForm.errors.title}}</p>
+      {{/if}}
+    </div>
+
+    <div>
+      <label for="description">Descripción</label>
+      <textarea id="description" name="description">{{taskForm.values.description}}</textarea>
+      {{#if taskForm.errors.description}}
+        <p role="alert">{{taskForm.errors.description}}</p>
+      {{/if}}
+    </div>
+
+    <div>
+      <label for="dueDate">Fecha límite</label>
+      <input id="dueDate" name="dueDate" type="date" value="{{taskForm.values.dueDate}}">
+      {{#if taskForm.errors.dueDate}}
+        <p role="alert">{{taskForm.errors.dueDate}}</p>
+      {{/if}}
+    </div>
+
+    <button type="submit">Crear tarea</button>
+  </form>
+</section>
+
+<section>
+  <h2>Mis tareas</h2>
+
+  {{#if tasks}}
+    <ul>
+      {{#each tasks}}
+        <li>
+          <strong>{{title}}</strong>
+          {{#if description}}
+            <p>{{description}}</p>
+          {{/if}}
+          {{#if dueDateLabel}}
+            <p>Fecha límite: {{dueDateLabel}}</p>
+          {{/if}}
+          <p>Estado: {{status}} | Prioridad: {{priority}}</p>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No tienes tareas todavía.</p>
+  {{/if}}
+</section>
