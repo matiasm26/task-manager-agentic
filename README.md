@@ -34,9 +34,10 @@ El archivo `.env` debe contener al menos:
 ```env
 DATABASE_URL="file:./dev.db"
 PORT=3000
+SESSION_SECRET="cambia-este-secreto-en-desarrollo"
 ```
 
-`DATABASE_URL` es requerida por Prisma para conectarse a SQLite. El archivo `.env` es local y no se versiona en Git.
+`DATABASE_URL` es requerida por Prisma para conectarse a SQLite. `SESSION_SECRET` firma la cookie de sesión y debe ser un valor privado en cada entorno. El archivo `.env` es local y no se versiona en Git.
 
 ## Base de datos
 

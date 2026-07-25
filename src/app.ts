@@ -3,8 +3,11 @@ import path from "node:path";
 import express from "express";
 import { engine } from "express-handlebars";
 
+import { sessionMiddleware } from "./config/session";
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
+import { exposeCurrentUser } from "./middlewares/auth.middleware";
 import authRoutes from "./routes/auth.routes";
+import dashboardRoutes from "./routes/dashboard.routes";
 import homeRoutes from "./routes/home.routes";
 
 const app = express();
@@ -24,8 +27,12 @@ app.set("views", viewsPath);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(sessionMiddleware);
+app.use(exposeCurrentUser);
+
 
 app.use("/auth", authRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 app.use("/", homeRoutes);
 

@@ -24,4 +24,16 @@ export const registerSchema = z
     path: ["passwordConfirmation"],
   });
 
+
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .email("Ingresa un email válido.")
+    .max(254, "El email no puede superar los 254 caracteres.")
+    .transform((email) => email.toLowerCase()),
+  password: z.string().min(1, "Ingresa tu contraseña."),
+});
+
+export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
