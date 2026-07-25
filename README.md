@@ -1,10 +1,14 @@
 # Task Manager Agentic
 
-Aplicación monolítica MVC con renderizado del servidor para gestión de tareas. Stack base: Node.js, TypeScript, Express, Handlebars, Prisma y SQLite.
+Aplicación monolítica MVC con renderizado del servidor para gestión de tareas personales.
+
+Incluye registro de usuarios, inicio de sesión, cierre de sesión, sesiones con cookie, rutas protegidas y CRUD de tareas. Cada usuario ve y modifica únicamente sus propias tareas. Las tareas tienen título, descripción opcional, fecha límite opcional, estado y prioridad.
+
+Stack utilizado: Node.js, TypeScript, Express, Handlebars, Prisma, SQLite, `express-session`, `bcryptjs` y Zod.
 
 ## Requisitos
 
-- Node.js instalado.
+- Node.js >=22.22.2.
 - npm instalado.
 
 ## Instalación
@@ -67,6 +71,15 @@ Por defecto la aplicación queda disponible en:
 http://localhost:3000
 ```
 
+Rutas principales:
+
+```text
+/                  Página de bienvenida
+/auth/register     Registro
+/auth/login        Inicio de sesión
+/dashboard         Dashboard protegido y tareas del usuario autenticado
+```
+
 ## Producción local
 
 Compila TypeScript:
@@ -86,3 +99,5 @@ npm start
 - No subas `.env` al repositorio.
 - Usa `.env.example` solo como plantilla.
 - No guardes contraseñas en texto plano.
+- Las rutas de tareas deben operar con el usuario autenticado en sesión.
+- Las tareas ajenas no deben revelarse ni modificarse.
