@@ -4,13 +4,369 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}} | Task Manager Agentic</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --color-bg: #f4f7fb;
+        --color-surface: #ffffff;
+        --color-surface-soft: #eef4ff;
+        --color-border: #d9e2ef;
+        --color-text: #172033;
+        --color-muted: #667085;
+        --color-primary: #2563eb;
+        --color-primary-dark: #1d4ed8;
+        --color-danger: #dc2626;
+        --color-danger-dark: #b91c1c;
+        --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+        --radius-lg: 22px;
+        --radius-md: 14px;
+        --radius-sm: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #f8fbff 0%, var(--color-bg) 100%);
+        color: var(--color-text);
+        font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.5;
+      }
+
+      a {
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: color 160ms ease, transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+      }
+
+      a:hover {
+        color: var(--color-primary-dark);
+      }
+
+      .app-navbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem clamp(1rem, 4vw, 3rem);
+        background: rgba(255, 255, 255, 0.9);
+        border-bottom: 1px solid var(--color-border);
+        backdrop-filter: blur(12px);
+      }
+
+      .brand {
+        color: var(--color-text);
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .app-shell {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 2rem 0 3rem;
+      }
+
+      .stack {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .page-hero,
+      .card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .page-hero {
+        padding: clamp(2rem, 5vw, 3.5rem);
+      }
+
+      .page-hero h2,
+      .card h2 {
+        margin: 0 0 0.75rem;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        letter-spacing: -0.04em;
+      }
+
+      .page-hero p,
+      .card p {
+        color: var(--color-muted);
+      }
+
+      .card {
+        padding: clamp(1.25rem, 3vw, 2rem);
+      }
+
+      .narrow-card {
+        width: min(480px, 100%);
+        margin: 0 auto;
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      label {
+        color: #344054;
+        font-size: 0.95rem;
+        font-weight: 650;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: #ffffff;
+        color: var(--color-text);
+        font: inherit;
+        padding: 0.8rem 0.9rem;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+        outline: none;
+      }
+
+      .btn,
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        min-height: 2.6rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        background: var(--color-primary);
+        color: #ffffff;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        padding: 0.7rem 1.1rem;
+        transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+      }
+
+      .btn:hover,
+      button:hover {
+        background: var(--color-primary-dark);
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.2);
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        border-color: var(--color-border);
+        color: var(--color-text);
+      }
+
+      .btn-secondary:hover {
+        background: var(--color-surface-soft);
+        border-color: #b8c7dc;
+        color: var(--color-primary-dark);
+      }
+
+      .btn-danger,
+      .btn-logout {
+        background: #ffffff;
+        border-color: #fecaca;
+        color: var(--color-danger);
+      }
+
+      .btn-danger:hover,
+      .btn-logout:hover {
+        background: var(--color-danger);
+        border-color: var(--color-danger);
+        color: #ffffff;
+        box-shadow: 0 10px 24px rgba(220, 38, 38, 0.18);
+      }
+
+      .link-row,
+      .actions-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .alert {
+        margin: 0.15rem 0 0;
+        color: #b42318;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.4fr);
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .task-list {
+        display: grid;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .task-card {
+        display: grid;
+        gap: 0.9rem;
+        padding: 1.15rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+      }
+
+      .task-card h3 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .task-description,
+      .task-meta,
+      .muted {
+        color: var(--color-muted);
+      }
+
+      .task-description,
+      .task-meta {
+        margin: 0;
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        padding: 0.35rem 0.65rem;
+      }
+
+      .status-PENDING {
+        background: #e0f2fe;
+        color: #0369a1;
+      }
+
+      .status-IN_PROGRESS {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+
+      .status-COMPLETED {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .priority-LOW {
+        background: #f1f5f9;
+        color: #475569;
+      }
+
+      .priority-MEDIUM {
+        background: #fef3c7;
+        color: #a16207;
+      }
+
+      .priority-HIGH {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .empty-state {
+        margin: 0;
+        border: 1px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: #f8fbff;
+        color: var(--color-muted);
+        padding: 1.25rem;
+        text-align: center;
+      }
+
+      @media (max-width: 760px) {
+        .app-navbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .nav-actions {
+          justify-content: flex-start;
+          width: 100%;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .btn,
+        button,
+        .nav-actions a,
+        .nav-actions form {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
-    <header>
-      <h1>Task Manager Agentic</h1>
+    <header class="app-navbar">
+      <a class="brand" href="/">Task Manager Agentic</a>
+      <div class="nav-actions">
+        {{#if currentUser}}
+          <a class="btn btn-secondary" href="/dashboard">Dashboard</a>
+          <form action="/auth/logout" method="POST">
+            <button class="btn-logout" type="submit">Cerrar sesión</button>
+          </form>
+        {{else}}
+          <a class="btn btn-secondary" href="/auth/login">Iniciar sesión</a>
+          <a class="btn" href="/auth/register">Crear cuenta</a>
+        {{/if}}
+      </div>
     </header>
 
-    <main>
+    <main class="app-shell">
       {{{body}}}
     </main>
   </body>

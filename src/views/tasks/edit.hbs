@@ -1,32 +1,35 @@
-<section>
-  <h2>Editar tarea</h2>
+<section class="card narrow-card stack">
+  <div>
+    <h2>Editar tarea</h2>
+    <p class="muted">Actualiza los datos, el estado y la prioridad de tu tarea.</p>
+  </div>
 
-  <form action="/tasks/{{task.id}}" method="POST" novalidate>
-    <div>
+  <form class="form-grid" action="/tasks/{{task.id}}" method="POST" novalidate>
+    <div class="form-group">
       <label for="title">Título</label>
       <input id="title" name="title" type="text" value="{{task.title}}" required>
       {{#if errors.title}}
-        <p role="alert">{{errors.title}}</p>
+        <p class="alert" role="alert">{{errors.title}}</p>
       {{/if}}
     </div>
 
-    <div>
+    <div class="form-group">
       <label for="description">Descripción</label>
       <textarea id="description" name="description">{{task.description}}</textarea>
       {{#if errors.description}}
-        <p role="alert">{{errors.description}}</p>
+        <p class="alert" role="alert">{{errors.description}}</p>
       {{/if}}
     </div>
 
-    <div>
+    <div class="form-group">
       <label for="dueDate">Fecha límite</label>
       <input id="dueDate" name="dueDate" type="date" value="{{task.dueDate}}">
       {{#if errors.dueDate}}
-        <p role="alert">{{errors.dueDate}}</p>
+        <p class="alert" role="alert">{{errors.dueDate}}</p>
       {{/if}}
     </div>
 
-    <div>
+    <div class="form-group">
       <label for="status">Estado</label>
       <select id="status" name="status">
         {{#each statusOptions}}
@@ -34,11 +37,11 @@
         {{/each}}
       </select>
       {{#if errors.status}}
-        <p role="alert">{{errors.status}}</p>
+        <p class="alert" role="alert">{{errors.status}}</p>
       {{/if}}
     </div>
 
-    <div>
+    <div class="form-group">
       <label for="priority">Prioridad</label>
       <select id="priority" name="priority">
         {{#each priorityOptions}}
@@ -46,16 +49,13 @@
         {{/each}}
       </select>
       {{#if errors.priority}}
-        <p role="alert">{{errors.priority}}</p>
+        <p class="alert" role="alert">{{errors.priority}}</p>
       {{/if}}
     </div>
 
-    <button type="submit">Guardar cambios</button>
-  </form>
-
-  <p><a href="/dashboard">Volver al dashboard</a></p>
-
-  <form action="/auth/logout" method="POST">
-    <button type="submit">Cerrar sesión</button>
+    <div class="actions-row">
+      <button type="submit">Guardar cambios</button>
+      <a class="btn btn-secondary" href="/dashboard">Volver al dashboard</a>
+    </div>
   </form>
 </section>

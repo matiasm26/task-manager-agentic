@@ -1,29 +1,32 @@
-<section>
-  <h2>Inicio de sesión</h2>
+<section class="card narrow-card stack">
+  <div>
+    <h2>Inicio de sesión</h2>
+    <p class="muted">Ingresa con tu cuenta para gestionar tus tareas.</p>
+  </div>
 
   {{#if errors.form}}
-    <p role="alert">{{errors.form}}</p>
+    <p class="alert" role="alert">{{errors.form}}</p>
   {{/if}}
 
-  <form action="/auth/login" method="POST" novalidate>
-    <div>
+  <form class="form-grid" action="/auth/login" method="POST" novalidate>
+    <div class="form-group">
       <label for="email">Email</label>
       <input id="email" name="email" type="email" value="{{values.email}}" autocomplete="email" required>
       {{#if errors.email}}
-        <p role="alert">{{errors.email}}</p>
+        <p class="alert" role="alert">{{errors.email}}</p>
       {{/if}}
     </div>
 
-    <div>
+    <div class="form-group">
       <label for="password">Contraseña</label>
       <input id="password" name="password" type="password" autocomplete="current-password" required>
       {{#if errors.password}}
-        <p role="alert">{{errors.password}}</p>
+        <p class="alert" role="alert">{{errors.password}}</p>
       {{/if}}
     </div>
 
     <button type="submit">Iniciar sesión</button>
   </form>
 
-  <p><a href="/auth/register">Crear una cuenta</a></p>
+  <p class="muted">¿No tienes cuenta? <a href="/auth/register">Crear una cuenta</a></p>
 </section>
